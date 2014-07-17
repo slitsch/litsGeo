@@ -10,10 +10,10 @@
 //Connect js to indexFlex.html buttons and input
 jQuery(document).ready(function($) {
     console.log($('#abcbox').val())
+    var phoneNum = document.getElementById('abcBox').value;
     $('#button1').click(function() {
-        var valVar = $('#abcbox').val();
-        valVar = phoneFormat(valVar);
-        $('#abcbox').val(valVar);
+        phoneNum = phoneFormat(phoneNum);
+        $('#abcbox').val(phoneNum);
     });
     $('#button2').on('click', function() {
         $('body').toggleClass('wow');
