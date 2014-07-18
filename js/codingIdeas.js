@@ -9,36 +9,46 @@
 
 //Connect js to indexFlex.html buttons and input
 jQuery(document).ready(function($) {
-    console.log($('#abcbox').val())
-    var phoneNum = document.getElementById('abcBox').value;
+//    console.log($('#abcbox').val())
+    var textBox = document.getElementById("abcBox");
+//    textBox.value = "1234";
+
+//    console.log(phoneNum);
     $('#button1').click(function() {
+        var phoneNum = textBox.value;
         phoneNum = phoneFormat(phoneNum);
-        $('#abcbox').val(phoneNum);
+        console.log(phoneNum);
+        var outTextbox = document.getElementById('abcBoxOut');
+        outTextbox.value = phoneNum;
     });
     $('#button2').on('click', function() {
-        $('body').toggleClass('wow');
+        var arr = document.getElementById('uniqArrBox').value;
+        console.log(arr);
+        arr = createUniqueArray(arr);
+        console.log(arr);
+        document.getElementById('uniqArrBoxOut').value = arr;
     })
 });
 
 
-var inputText = "Hi! & \nBye #1\n";
-console.log("inputText: ", inputText);
-
-var result = escapeInputText(inputText);
-console.log("escapeInputText ", result);
-
-var slugResult = slugize(inputText);
-console.log("slugResult: ", slugResult);
-
-var nl2brResult = newline2br(inputText);
-console.log("newline2br: ", nl2brResult);
-
-var badNum = "12309!gy65784";
-var badNum2 = "1234567891011";
-var goodNum = "5309259837";
-console.log("phoneFormat results: ",phoneFormat(badNum));
-console.log("phoneFormat results: ",phoneFormat(badNum2));
-console.log("phoneFormat results: ",phoneFormat(goodNum));
+//var inputText = "Hi! & \nBye #1\n";
+//console.log("inputText: ", inputText);
+//
+//var result = escapeInputText(inputText);
+//console.log("escapeInputText ", result);
+//
+//var slugResult = slugize(inputText);
+//console.log("slugResult: ", slugResult);
+//
+//var nl2brResult = newline2br(inputText);
+//console.log("newline2br: ", nl2brResult);
+//
+//var badNum = "12309!gy65784";
+//var badNum2 = "1234567891011";
+//var goodNum = "5309259837";
+//console.log("phoneFormat results: ",phoneFormat(badNum));
+//console.log("phoneFormat results: ",phoneFormat(badNum2));
+//console.log("phoneFormat results: ",phoneFormat(goodNum));
 
 function escapeInputText(str){
     var arr = str.split('');
@@ -84,6 +94,7 @@ function newline2br(str) {
 function phoneFormat(numStr) {
 //    phone number format - detect if a string is a phone number
 // and properly format it with dashes.
+    console.log(numStr);
     var reg = /(\D)/g; //includes non-number chars
     if (numStr.match(reg)) {
         return "Non-numbers are included: string invalid: " + numStr;
@@ -99,25 +110,36 @@ function phoneFormat(numStr) {
        var areaCode = numStr.slice(0,3);
        var digit3 = numStr.slice(3,6);
        var digit4 = numStr.slice(6,10);
-       return areaCode + "-" + digit3 + "-" + digit4;
+       return "(" + areaCode + ") " + digit3 + "-" + digit4;
 //       console.log(areaCode, digit3, digit4)
    }
 }
 
 //Array code **********************
-var testArr = [1,2,3,4,3,4];
-console.log(createUniqueArray(testArr));
+//var testArr = [1,2,3,4,3,4];
+//console.log(createUniqueArray(testArr));
 
 function createUniqueArray(arr) {
 //    unique: return a new array with only unique items in that array
 // so  unique([1,3,4,3,3]) -> [1,3,4]
 //
     var uArr = [];
-    arr.forEach(function (item) {
-        if (uArr.length == 0) uArr.push(item);
-        else {
-            if (uArr.indexOf(item) == false)uArr.push(item);
+    console.log(arr);
+//    arr.forEach(function (item) {
+//        if (uArr.length == 0) uArr.push(item);
+//        else {
+//            if (uArr.indexOf(item) == false)uArr.push(item);
+//        }
+//    });
+
+    for(var i = 1; i<arr.length; i++){
+        if (arr[i] != "["){
+
+            if (uArr.length == 0) uArr.push(arr[i]);
+            else {
+                if (uArr.indexOf(arr[i]) == false)uArr.push(arr[i]);
+            }
         }
-    });
+    }
     return uArr;
 }
