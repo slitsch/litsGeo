@@ -2,6 +2,7 @@
   <dictionary name="Valued Customer">
     <words>
       <w>geospatial</w>
+      <w>slugize</w>
     </words>
   </dictionary>
 </component>

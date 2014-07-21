@@ -27,10 +27,16 @@ jQuery(document).ready(function($) {
         arr = createUniqueArray(arr);
         console.log(arr);
         document.getElementById('uniqArrBoxOut').value = arr;
+    });
+    $('slugButton').on('click', function(){
+        var str1 = document.getElementById('slugBox').value;
+        console.log(str1)
+        str1 = slugize(str1);
+        document.getElementById('slugBox').value = str;
     })
 });
 
-
+// **** test strings ****
 //var inputText = "Hi! & \nBye #1\n";
 //console.log("inputText: ", inputText);
 //
@@ -106,7 +112,11 @@ function phoneFormat(numStr) {
     else {
         return "String is too long; it is not a phone number: " + numStr;
     }
-   } else {
+   }
+   else if (numStr.length < 10) {
+       return "String is too short to be a phone number";
+   }
+   else {
        var areaCode = numStr.slice(0,3);
        var digit3 = numStr.slice(3,6);
        var digit4 = numStr.slice(6,10);
@@ -132,12 +142,14 @@ function createUniqueArray(arr) {
 //        }
 //    });
 
-    for(var i = 1; i<arr.length; i++){
+    for(var i = 0; i<arr.length; i++){
         if (arr[i] != "["){
-
-            if (uArr.length == 0) uArr.push(arr[i]);
-            else {
-                if (uArr.indexOf(arr[i]) == false)uArr.push(arr[i]);
+            var item = arr[i];
+            if (item !== ',') {
+                if (uArr.length == 0) uArr.push(item);
+                else {
+                    if (uArr.indexOf(item) === -1)uArr.push(item);
+                }
             }
         }
     }

@@ -28,6 +28,7 @@ body {
     flex: 1 100%;
     padding: 10px;
     min-height: 50vh;
+    text-align: center;
 }
 
 .content {
@@ -49,6 +50,10 @@ body {
 
 .aside-2 {
     background: lightcyan;
+}
+
+#uniqArrBoxOut, #abcboxOut {
+    width:200px;
 }
 
 @media all and (min-width: 600px) {
