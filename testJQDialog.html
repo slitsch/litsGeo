@@ -1,10 +1,53 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>dialog demo</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 </head>
 <body>
+<button id="opener">open the dialog</button>
+<div id="dialog" title="Dialog Title">I'm a dialog</div>
+<script>
+    var olat = -28.08;
+    var olong = 153.417;
+    var page = "http://dev1.tomnod.com/chip_api/chip/lat/" + olat + "/lng/" + olong;
+    var $dialog = $('<div></div>')
+            .html('<iframe style="border: 0px; " src="' + page + '" width="100%" height="100%"></iframe>')
+            .dialog({
+                autoOpen: false,
+                modal: true,
+                height: 930,
+                width: 950,
+                title: "Image centered on point coordinates"
+            });
+    $dialog.dialog('open');
 
+//    $( "#dialog" ).dialog({
+//        autoOpen: false,
+////            height: 1000,
+////            width: 1000,
+//        modal: true,
+//        buttons: {
+//            'Building': function() {
+//                $(this).dialog('close');
+//            },
+//            'No building': function(){
+//                $(this).dialog('close');
+//                var path = $('this').data('link').href;
+//                $(location).attr('href'.path);
+//                console.log(location.href)
+//            }
+//        }});
+//
+////bind open  dialog to button click
+//    $( "#opener" ).click(function() {
+//        $( "#dialog" )
+//                .data('link', this)
+//                .dialog( 'open' );
+//    });
+</script>
 </body>
 </html>

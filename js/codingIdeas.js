@@ -30,7 +30,7 @@ jQuery(document).ready(function($) {
     });
     $('slugButton').on('click', function(){
         var str1 = document.getElementById('slugBox').value;
-        console.log(str1)
+        console.log(str1);
         str1 = slugize(str1);
         document.getElementById('slugBox').value = str;
     })
