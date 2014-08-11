@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+    <!--<script type="text/javascript" src="http://codeorigin.jquery.com/jquery-2.0.3.js"></script>-->
+
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script type="text/javascript">
+        var apiKey = 'AIzaSyDq7wfYfHVNRkjw1TRKN7SO87VdoX-XnVU'
+        src="https://maps.googleapis.com/maps/api/js?key=" + apiKey
+    </script>
+
+    <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>-->
+    <script type="text/javascript" src="js/findChip.js"></script>
+    <link rel="stylesheet" href="css/findChip.css"/>
+
+    <title>Chip Finder</title>
+
+    <script type="text/javascript">
+        function initialize() {
+            var goldCoast = new google.maps.LatLng(-28.08,153.417);
+            var mapOptions = {
+                center: goldCoast
+            };
+            //define locate as initial values of map center
+            var locate = {
+                lat: -28.08,
+                lng: 153.417
+            };
+
+            var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+            var page = "http://dev1.tomnod.com/chip_api/chip/lat/" + locate.lat + "/lng/" + locate.lng;
+
+            //overlay the kml points and parcels
+            var kmlParcels = new google.maps.KmlLayer({
+                url: 'https://dl.dropboxusercontent.com/u/2087103/Largest10PctParcelsbyArea.kmz'
+            });
+            kmlParcels.setMap(map);
+
+            var kmlLayer = new google.maps.KmlLayer({
+               url: 'https://dl.dropboxusercontent.com/u/2087103/ParcelCentroids_sj10byArea.kmz'
+            });
+            kmlLayer.setMap(map);
+
+
+            //If the user does not click on a valid point, send an error alert
+            google.maps.event.addListener(map, 'click', function(e){
+                var myLatLng = e.latLng;
+                var lat = myLatLng.lat();
+                var lng = myLatLng.lng();
+                console.log(lat,lng);
+                alert("Error: please click a valid centroid point.");
+            });
+
+            //User clicks on pt, get lat long, and open chip window
+            google.maps.event.addListener(kmlLayer, 'click', function(e){
+                var myLatLng = e.latLng;
+                console.log("myLatLng: " + myLatLng);
+                locate = myLatLng;
+                console.log("lat, lng: " + locate.lat(), locate.lng());
+                console.log("clickKML: " + locate);
+                map.setCenter(locate);
+                map.setZoom(16);
+                page = "http://dev1.tomnod.com/chip_api/chip/lat/" + locate.lat() + "/lng/" + locate.lng();
+                getChipPage(locate, page);
+            });
+
+            //User clicks on parcel, get lat long, and open chip window
+            google.maps.event.addListener(kmlParcels, 'click', function(e){
+                var myLatLng = e.latLng;
+                locate = myLatLng;
+//                console.log("lat, lng: " + locate.lat(), locate.lng());
+//                console.log("clickKML: " + locate);
+                map.setCenter(locate);
+                map.setZoom(16);
+                page = "http://dev1.tomnod.com/chip_api/chip/lat/" + locate.lat() + "/lng/" + locate.lng();
+                getChipPage(locate, page);
+            });
+
+            var building = false;
+            //add a different colored marker determined by whether the parcel has a building or not
+            function addMarker(locate, building){
+                var markerColor = "ca993d";
+//                console.log("building: " + building);
+                if (building){
+                    markerColor = "00ffef";
+                } else{
+                    markerColor = "ca993d";
+                }
+                var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + markerColor,
+                        new google.maps.Size(21, 34),
+                        new google.maps.Point(0,0),
+                        new google.maps.Point(10, 34));
+//                console.log("markerColor: " + markerColor);
+                var marker = new google.maps.Marker({
+                    icon: pinImage,
+                    position: locate,
+                    map: map
+                });
+                console.log(marker.position);
+
+            }
+
+            <!--Given the lat long, add it into the png url, open chip in new dialog-->
+            function getChipPage(locate, page) {
+                console.log("page: " +page);
+                var buildingBool = false;
+//                var wHeight = $(window).height();
+//                var wWidth = $(window).width();
+                var iHeight = 600;
+                var iWidth = 600;
+//                wHeight = iHeight; //wHeight  / 2;
+//                wWidth = iWidth; //wWidth / 2;
+
+                var $dialog = $('<div id="chipDiv2"></div>')
+                       //.html('<img id="imgDG" style="border: 5px; width=90%; height=90%" src=' + page + ' ></img>')
+                        .html('<img id="imgDG"  src=' + page + '></img>')
+                        .dialog({
+                            autoOpen: false,
+                            modal: true,
+                            position: {my: "right bottom", at: "right center", of: window},
+                            height: iHeight,
+                            width: iWidth,
+                            title: "Image chip is centered on point coordinates",
+                            buttons: {
+                                'Buildings exist': function() {
+                                    $(this).dialog('close');
+                                    buildingBool = callback(true);
+                                    addMarker(locate, buildingBool);
+                                },
+                                'No buildings exist': function(){
+                                    $(this).dialog('close');
+                                    buildingBool = callback(false);
+                                    addMarker(locate, buildingBool);
+                                }
+                            }
+                        });
+                console.log("buildingBool: " + buildingBool);
+                $dialog.dialog('open');
+
+            };
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+        var numBuildings = 0;
+        var numImages = 0;
+
+         function callback(value) {
+             console.log("callback:" + value);
+             var building = value;
+             if (value == true) {
+                 numBuildings +=1;
+             }
+             numImages += 1;
+             console.log(numImages);
+             addToSessionResults(numImages,numBuildings);
+             return building;
+         }
+
+    </script>
+
+</head>
+<body>
+<header>
+    <h1>Check Out a Chip</h1>
+    <h4>Test the parcel size and building presence hypothesis by clicking on a point to display
+    the satellite image chip centered on those coordinates.<br>
+        Determine whether a building exists on the parcel and click on the button for 'Buildings exists' or 'No buildings exist'.<br>
+        When a building is found, a blue marker will appear.
+        Brown markers indicate that no buildings are present.</h4>
+</header>
+
+<div id="map-canvas"></div>
+
+<footer>
+    <div id="leftFoot">
+    Session score (n=46)
+        <div id="imagesChecked">Images checked = 0</div>
+        <div id="buildingsFound">Buildings found = 0</div>
+     </div>
+
+    <div id='rightFoot'>
+        Parcel Plots and Buildings<br>
+        <a href="mailto:samlitsch@gmail.com">Sam Litschert</a> for DigitalGlobe Tech Exam<br>
+        July, 2014<br>
+    </div>
+
+</footer>
+</body>
+</html>
