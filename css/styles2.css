@@ -1,9 +1,9 @@
-.flexcontainer {
-    display: -webkit-flex;
-    display: flex;
-}
+/*.flexcontainer {*/
+    /*display: -webkit-flex;*/
+    /*display: flex;*/
+/*}*/
 
-#container {
+body {
     width: 800px;
     font-family: "'Open Sans", sans-serif;
 }
