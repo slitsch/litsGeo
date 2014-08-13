@@ -26,31 +26,40 @@ jQuery(document).ready(function($) {
     });
 
     function getPrice(){
-        calcs.price = parseFloat(document.getElementById('priceBox').value);
+        var pBox = document.getElementById('priceBox');
+        calcs.price = parseFloat(pBox.value);
         if (calcs.price <= 0 || isNaN(calcs.price)) {
+            $(pBox).addClass("badBox");
             alert("Please enter a price per sq ft");
             return false
         }
+        $(pBox).removeClass("badBox");
         return true
     }
 
     function getWidth() {
-        calcs.width = parseFloat(document.getElementById('widthBox').value);
+        var wBox = document.getElementById('widthBox');
+        calcs.width = parseFloat(wBox.value);
 //        console.log('width' + calcs.width);
         if (calcs.width <= 0 || isNaN(calcs.width)){
+            $(wBox).addClass('badBox');
             alert('Please enter the room width in ft.');
             return false
         }
+        $(wBox).removeClass('badBox');
         return true
     }
 
     function getLength(){
-        calcs.length = parseFloat(document.getElementById('lengthBox').value);
+        var lBox = document.getElementById('lengthBox');
+        calcs.length = parseFloat(lBox.value);
 //        console.log('length' + calcs.length);
         if (calcs.length <= 0 || isNaN(calcs.length)){
+            $(lBox).addClass('badBox');
             alert('Please enter the room length in ft.');
             return false
         }
+        $(lBox).removeClass('badBox');
         return true
     }
 
