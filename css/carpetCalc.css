@@ -1,7 +1,7 @@
-html {
+body{
     width: 850px;
-}
 
+}
 #Romney {
        float: left;
    }
@@ -10,21 +10,27 @@ header  {
     background: #2A5070;
     width: 100%;
     padding: 1px;
-    /*margin: 10px;*/
     text-align: center;
     height: 192px;
 }
 
 h1 {
     color: linen;
+
 }
+
+
+
 #calculator {
     color: #2A5070;
     width: 800px;
     padding : 30px;
 }
 
-
+#calculator {
+    padding : 30px;
+    width: 800px;
+}
 #priceBox, #widthBox, #lengthBox, #quantityBox, #areaCostBox {
     text-align: right;
     float: right;

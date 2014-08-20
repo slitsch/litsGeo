@@ -1,6 +1,20 @@
+.flexcontainer {
+    display: -webkit-flex;
+    display: flex;
+}
+
+
+
+
 
 #container {
+
+    width: 800px;
+    font-family: "'Open Sans", sans-serif;
    font-family: "'Open Sans", sans-serif;
+}
+#wow {
+    background-color: purple;
 }
 
 header {
@@ -28,6 +42,14 @@ h1 {
     margin-bottom: 0;
 }
 
+#menu {
+    background-color: rgba(167,207,223,1);
+    border:5px solid rgba(35,83,138,1);
+    margin: 20px;
+    height: 200px;
+    width: 100px;
+    float: left;
+    padding: 10px 0px 0px 10px;
 #menuL, #menuR {
     background-color: white;
     /*border:5px solid rgb(167,207,223);*/
@@ -35,10 +57,18 @@ h1 {
     /*color: darkblue;*/
 }
 
+#content{
 #content {
     background-color: linen;
+
+    /*height: 200px;*/
+    width: 400px;
+    margin-top:30px;
+    /*padding-top: 30px;*/
+    float: left;
 }
 
+footer {
 #foot {
     background-color: linen;
     color:darkblue;
@@ -46,9 +76,19 @@ h1 {
     text-align: center;
 }
 
+@media(min-width: 600px) {
 /*@media(min-width: 600px) {*/
     /*change settings for screen v. print, tv, projector*/
+    header {
     /*header {*/
         /*blah */
+    }
+}
     /*}*/
 /*}*/
+@media(min-width: 600px) {
+    /*change settings for screen v. print, tv, projector*/
+    header {
+        /*blah */
+    }
+}
