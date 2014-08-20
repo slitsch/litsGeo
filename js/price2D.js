@@ -26,11 +26,14 @@ jQuery(document).ready(function($) {
     });
 
     function getPrice(){
-        calcs.price = parseFloat(document.getElementById('priceBox').value);
+        var pBox = document.getElementById('priceBox');
+        calcs.price = parseFloat(pBox.value);
         if (calcs.price <= 0 || isNaN(calcs.price)) {
+            $('pBox').addClass('badBox');
             alert("Please enter a price per sq ft");
             return false
         }
+        $('pBox').removeClass('badBox');
         return true
     }
 

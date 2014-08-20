@@ -31,19 +31,18 @@
             <label for="widthBox">Room width (ft) </label>
             <input type="text" name="widthBox" id="widthBox" value="0"><br>
             <label for="lengthBox">Room length (ft)</label>
-            <input type="text" name="lengthBox" id="lengthBox" value="0"><br><br>
+            <input type="text" name="lengthBox" id="lengthBox" value="0"><br>
         </form>
 
         <form id="formRight">
-            <div class="card" ng-class="{'flipped':isFlipped}" ng-click="isFlipped=!isFlipped">
+
                 <label for="quantityBox">Carpet area (sq ft)</label>
                 <input type="text" name="quantityBox" id="quantityBox"><br>
                 <label for="areaCostBox">Carpet cost ($)</label>
                 <input type="text" name="areaCostBox" id="areaCostBox"><br><br>
-            </div>
 
             <input type="submit" id="calculate" value="Calculate"> </input>
-        </form>
+            </form>
         </div>
     </div>
 </body>
